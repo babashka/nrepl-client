@@ -14,7 +14,7 @@ Still in development, anything can change at this point.
 
 In `bb.edn` tasks:
 
-```
+``` clojure
 {:deps {babashka/nrepl-client {:git/url "https://github.com/babashka/nrepl-client"
                                :git/sha "19fbef2525e47d80b9278c49a545de58f48ee7cf"}}
  :tasks {nrepl-eval {:requires ([babashka.nrepl-client :as nrepl])
