@@ -6,7 +6,7 @@ Still in development, anything can change at this point.
 
 ## Usage
 
-```
+``` clojure
 (require '[babashka.nrepl-client :as nrepl])
 (nrepl/eval-expr {:port 1667 :expr "(+ 1 2 3)"})
 ;; => {:vals ["6"]}
