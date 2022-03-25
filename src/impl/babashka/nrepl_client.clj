@@ -1,5 +1,6 @@
 (ns impl.babashka.nrepl-client
-  (:require [bencode.core :as b]))
+  (:require [bencode.core :as b]
+            [clojure.edn :as edn]))
 
 (defn parse-number
   "Reads a number from a string. Returns nil if not a number."
