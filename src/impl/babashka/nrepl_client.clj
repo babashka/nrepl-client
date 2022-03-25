@@ -1,12 +1,5 @@
 (ns impl.babashka.nrepl-client
-  (:require [bencode.core :as b]
-            [clojure.edn :as edn]))
-
-(defn parse-number
-  "Reads a number from a string. Returns nil if not a number."
-  [s]
-  (when (re-find #"^-?\d+\.?\d*$" s)
-    (edn/read-string s)))
+  (:require [bencode.core :as b]))
 
 (defn bytes->str [x]
   (if (bytes? x) (String. (bytes x))
@@ -35,7 +28,7 @@
         (recur)))))
 
 (defn coerce-long [x]
-  (if (string? x) (parse-number x) x))
+  (if (string? x)  #(Long/parseLong x) x))
 
 (def current-id (atom 0))
 
