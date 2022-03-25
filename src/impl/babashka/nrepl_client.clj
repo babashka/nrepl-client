@@ -28,7 +28,7 @@
         (recur)))))
 
 (defn coerce-long [x]
-  (if (string? x) (parse-long x) x))
+  (if (string? x)  #(Long/parseLong x) x))
 
 (def current-id (atom 0))
 
