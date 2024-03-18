@@ -49,8 +49,12 @@
         _ (b/write-bencode out {"op" "eval" "code" expr "id" id "session" session})]
     (loop [values []]
       (let [{:keys [status out err value]} (read-reply in session id)]
-        (when (or out err)
-          (print (or out err))
+        (when out
+          (print out)
+          (flush))
+        (when err
+          (binding [*out* *err*]
+            (print err))
           (flush))
         (if (= status ["done"])
           {:vals values}
