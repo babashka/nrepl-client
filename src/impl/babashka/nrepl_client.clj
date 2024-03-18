@@ -54,8 +54,8 @@
           (flush))
         (when err
           (binding [*out* *err*]
-            (print err))
-          (flush))
+            (print err)
+            (flush)))
         (if (= status ["done"])
           {:vals values}
           (recur (cond-> values value (conj value))))))))
