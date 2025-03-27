@@ -37,7 +37,10 @@
 
 (defn eval-expr
   "Execute :expr in nREPL on given :host (defaults to localhost)
-  and :port. Returns map with :vals. Prints any output to *out*."
+  and :port. Returns map with :vals. Prints any output to *out*.
+
+  :vals is a vector with eval results from all the top-level
+  forms in the :expr. See the README for an example."
   [{:keys [host port expr]}]
   (let [s (java.net.Socket. (or host "localhost") (coerce-long port))
         out (.getOutputStream s)

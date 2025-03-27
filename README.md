@@ -10,6 +10,9 @@ Still in development, anything can change at this point.
 (require '[babashka.nrepl-client :as nrepl])
 (nrepl/eval-expr {:port 1667 :expr "(+ 1 2 3)"})
 ;; => {:vals ["6"]}
+;; multiple forms supported in :expr
+(nrepl/eval-expr {:port 1667 :expr "(+ 1 2) (+ 3 4) :ok"})
+;; => {:vals ["3" "7" ":ok"]}
 ```
 
 In `bb.edn` tasks:
