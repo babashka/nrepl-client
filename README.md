@@ -8,14 +8,24 @@ Still in development, anything can change at this point.
 
 ``` clojure
 (require '[babashka.nrepl-client :as nrepl])
-(nrepl/eval-expr {:port 1667 :expr "(+ 1 2 3)"})
-;; => {:vals ["6"]}
-;; multiple forms supported in :expr
-(nrepl/eval-expr {:port 1667 :expr "(+ 1 2) (+ 3 4) :ok"})
-;; => {:vals ["3" "7" ":ok"]}
+
+(-> (nrepl/eval-expr {:port 53099 :expr "(+ 1 2 3) (+ 1 2 3)"}) (clojure.pprint/pprint))
+{:vals ["6" "6"],
+ :responses
+ [{:id "6",
+   :ns "user",
+   :session "30b3b0df-2e77-43d2-a9f6-e2fa1430f3df",
+   :value "6"}
+  {:id "6",
+   :ns "user",
+   :session "30b3b0df-2e77-43d2-a9f6-e2fa1430f3df",
+   :value "6"}
+  {:id "6",
+   :session "30b3b0df-2e77-43d2-a9f6-e2fa1430f3df",
+   :status ["done"]}]}
 ```
 
-In `bb.edn` tasks:
+Example in `bb.edn` tasks:
 
 ``` clojure
 {:deps {babashka/nrepl-client {:git/url "https://github.com/babashka/nrepl-client"
@@ -37,6 +47,6 @@ $ bb nrepl-eval 1667 "(defn foo [] 3) (+ 1 2 (foo))"
 
 ## License
 
-Copyright © 2021 Michiel Borkent
+Copyright © 2021-2025 Michiel Borkent
 
 Distributed under the EPL License. See LICENSE.

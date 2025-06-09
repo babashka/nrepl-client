@@ -50,8 +50,7 @@
         {session :new-session} (read-msg (b/read-bencode in))
         id (next-id)
         _ (b/write-bencode out {"op" "eval" "code" expr "id" id "session" session})]
-    (loop [values []
-           responses []]
+    (loop [m {:vals [] :responses []}]
       (let [{:keys [status out value err] :as resp} (read-reply in session id)]
         (when out
           (print out)
@@ -60,7 +59,9 @@
           (binding [*out* *err*]
             (print err))
           (flush))
-        (if (= ["done"] status )
-          {:vals values :responses responses}
-          (recur (cond-> values value (conj value))
-                 (conj responses resp)))))))
+        (let [m (cond-> (update m :responses conj resp)
+                  value
+                  (update :vals conj value))]
+          (if (= ["done"] status)
+            m
+            (recur m)))))))
