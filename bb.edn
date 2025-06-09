@@ -1,6 +1,6 @@
 {:deps {babashka/nrepl-client {:local/root "."}}
  :tasks {nrepl-eval {:requires ([babashka.nrepl-client :as nrepl])
-                     :task (let [values (:vals (nrepl/eval-expr
-                                                {:port (first *command-line-args*)
-                                                 :expr (second *command-line-args*)}))]
-                             (run! println values))}}}
+                     :task (let [resps (nrepl/eval-expr
+                                         {:port (first *command-line-args*)
+                                          :expr (second *command-line-args*)})]
+                             (prn resps))}}}

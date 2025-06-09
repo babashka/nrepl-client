@@ -28,7 +28,7 @@
         (recur)))))
 
 (defn coerce-long [x]
-  (if (string? x)  #(Long/parseLong x) x))
+  (if (string? x) (Long/parseLong x) x))
 
 (def current-id (atom 0))
 
@@ -50,15 +50,17 @@
         {session :new-session} (read-msg (b/read-bencode in))
         id (next-id)
         _ (b/write-bencode out {"op" "eval" "code" expr "id" id "session" session})]
-    (loop [values []]
-      (let [{:keys [status out err value]} (read-reply in session id)]
+    (loop [values []
+           responses []]
+      (let [{:keys [status out value err] :as resp} (read-reply in session id)]
         (when out
           (print out)
           (flush))
         (when err
           (binding [*out* *err*]
-            (print err)
-            (flush)))
-        (if (= status ["done"])
-          {:vals values}
-          (recur (cond-> values value (conj value))))))))
+            (print err))
+          (flush))
+        (if (= ["done"] status )
+          {:vals values :responses responses}
+          (recur (cond-> values value (conj value))
+                 (conj responses resp)))))))
