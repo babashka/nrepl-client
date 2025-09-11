@@ -58,7 +58,7 @@
         (when err
           (binding [*out* *err*]
             (print err)
-            (flush))
+            (flush)))
         (let [m (cond-> (update m :responses conj resp)
                   value
                   (update :vals conj value))]
