@@ -29,7 +29,7 @@ Example in `bb.edn` tasks:
 
 ``` clojure
 {:deps {babashka/nrepl-client {:git/url "https://github.com/babashka/nrepl-client"
-                               :git/sha "19fbef2525e47d80b9278c49a545de58f48ee7cf"}}
+                               :git/sha "<latest-sha>"}}
  :tasks {nrepl-eval {:requires ([babashka.nrepl-client :as nrepl])
                      :task (let [values (:vals (nrepl/eval-expr
                                                 {:port (first *command-line-args*)
